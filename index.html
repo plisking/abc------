@@ -1,0 +1,1294 @@
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABC公司 - IEC 62443网络功能安全认证咨询</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 本地 Font Awesome CSS -->
+  <link href="assets/fonts/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0F4C81', // 深蓝色 - 代表安全和专业
+            secondary: '#2A86DB', // 中蓝色
+            accent: '#5B9BD5', // 浅蓝色
+            dark: '#1A202C',
+            light: '#F7FAFC'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .bg-gradient-blue {
+        background: linear-gradient(135deg, #0F4C81 0%, #2A86DB 100%);
+      }
+      .transition-custom {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+      .section-divider {
+        position: relative;
+        height: 80px;
+        overflow: hidden;
+      }
+      .section-divider::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,64L60,69.3C120,75,240,85,360,80C480,75,600,53,720,48C840,43,960,53,1080,58.7C1200,64,1320,64,1380,64L1440,64L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z'%3E%3C/path%3E%3C/svg%3E");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+  </style>
+  
+  <!-- 预加载字体 -->
+  <!-- 本地 Inter 字体 -->
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-cyrillic.woff2') format('woff2');
+      unicode-range: U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-cyrillic-ext.woff2') format('woff2');
+      unicode-range: U+0300-036F, U+1DC0-1DFF, U+20B4, U+2E80-2EFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-greek.woff2') format('woff2');
+      unicode-range: U+0370-03FF;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-greek-ext.woff2') format('woff2');
+      unicode-range: U+1F00-1FFF;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-vietnamese.woff2') format('woff2');
+      unicode-range: U+0102-0103, U+1EA0-1EF9, U+20AB;
+    }
+    body, .font-sans {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+  </style>
+</head>
+
+<body class="font-sans text-dark bg-light overflow-x-hidden">
+  <!-- 导航栏 - 修改为深蓝色背景，与页面背景形成对比 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-primary shadow-md">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a href="#" class="flex items-center">
+            <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+              <i class="fa fa-shield-alt text-primary text-xl"></i>
+            </div>
+            <span class="ml-2 text-xl font-bold text-white">ABC安全认证</span>
+          </a>
+        </div>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="#about" class="text-white/80 hover:text-white transition-custom font-medium">关于我们</a>
+          <a href="#services" class="text-white/80 hover:text-white transition-custom font-medium">服务内容</a>
+          <a href="#standard" class="text-white/80 hover:text-white transition-custom font-medium">IEC 62443标准</a>
+          <a href="#process" class="text-white/80 hover:text-white transition-custom font-medium">认证流程</a>
+          <a href="#cases" class="text-white/80 hover:text-white transition-custom font-medium">成功案例</a>
+          <a href="#contact" class="text-white/80 hover:text-white transition-custom font-medium">联系我们</a>
+        </nav>
+        
+        <!-- 咨询按钮 -->
+        <div class="hidden md:flex items-center">
+          <a href="#contact" class="px-5 py-2.5 bg-white text-primary hover:bg-gray-100 font-medium rounded-lg shadow-lg shadow-black/10 transition-custom">
+            立即咨询 <i class="fa fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+        
+        <!-- 移动端菜单按钮 -->
+        <div class="md:hidden">
+          <button id="menu-toggle" class="text-white hover:text-gray-200 focus:outline-none">
+            <i class="fa fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 移动端导航 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-primary border-t border-white/10">
+      <div class="px-4 py-5 space-y-3">
+        <a href="#about" class="block text-white/80 hover:text-white transition-custom font-medium py-2">关于我们</a>
+        <a href="#services" class="block text-white/80 hover:text-white transition-custom font-medium py-2">服务内容</a>
+        <a href="#standard" class="block text-white/80 hover:text-white transition-custom font-medium py-2">IEC 62443标准</a>
+        <a href="#process" class="block text-white/80 hover:text-white transition-custom font-medium py-2">认证流程</a>
+        <a href="#cases" class="block text-white/80 hover:text-white transition-custom font-medium py-2">成功案例</a>
+        <a href="#contact" class="block px-5 py-2.5 text-center bg-white text-primary hover:bg-gray-100 font-medium rounded-lg shadow-lg shadow-black/10 transition-custom mt-4">
+          立即咨询 <i class="fa fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区 -->
+  <section class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-12 md:mb-0">
+          <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+            <i class="fa fa-certificate mr-2"></i>专业认证咨询
+          </span>
+          <h1 class="text-[clamp(2.2rem,5vw,3.5rem)] font-bold leading-tight text-dark mb-6">
+            IEC 62443网络功能<br>
+            <span class="text-primary">安全认证咨询服务</span>
+          </h1>
+          <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 mb-8 max-w-xl">
+            ABC公司专注于提供IEC 62443网络功能安全标准的全方位认证咨询服务，帮助企业构建安全可靠的工业控制系统，防范网络威胁，确保生产运营安全。
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#contact" class="px-8 py-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-xl shadow-primary/20 transition-custom text-center">
+              咨询认证方案
+              <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+            <a href="#standard" class="px-8 py-4 bg-white hover:bg-gray-50 border border-gray-300 text-dark font-medium rounded-lg shadow-lg transition-custom text-center flex items-center justify-center">
+              <i class="fa fa-book text-primary mr-2"></i>
+              了解标准详情
+            </a>
+          </div>
+          <div class="mt-10 flex items-center">
+            <div class="flex -space-x-2">
+              <img src="assets/images/1001-100-100.jpg" alt="客户" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="assets/images/1002-100-100.jpg" alt="客户" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="assets/images/1003-100-100.jpg" alt="客户" class="w-10 h-10 rounded-full border-2 border-white">
+              <div class="w-10 h-10 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-primary text-xs font-medium">
+                50+
+              </div>
+            </div>
+            <div class="ml-4">
+              <div class="flex items-center mb-1">
+                <div class="flex">
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                  <i class="fa fa-star text-yellow-400"></i>
+                </div>
+                <span class="ml-2 font-medium">4.9/5</span>
+              </div>
+              <p class="text-sm text-gray-600">已服务50+企业客户</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 relative">
+          <div class="relative z-10 bg-white rounded-2xl shadow-2xl overflow-hidden hover-lift">
+            <img src="assets/images/180-800-600.jpg" alt="工业控制系统安全" class="w-full h-auto">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark/70 to-transparent p-6">
+              <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <i class="fa fa-industry text-primary text-xl"></i>
+                </div>
+                <div class="ml-4">
+                  <h3 class="text-white font-semibold">工业控制系统安全</h3>
+                  <p class="text-white/80 text-sm">全面符合IEC 62443标准要求</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 装饰元素 -->
+          <div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+          <div class="absolute -z-10 -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-xl"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 合作伙伴 -->
+
+
+  <!-- 关于我们 -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-xl overflow-hidden shadow-lg transform translate-y-8">
+              <img src="assets/images/20-600-800.jpg" alt="公司团队" class="w-full h-full object-cover">
+            </div>
+            <div class="rounded-xl overflow-hidden shadow-lg">
+              <img src="assets/images/48-600-800.jpg" alt="工作场景" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+        <div class="lg:w-1/2">
+          <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            <i class="fa fa-building mr-2"></i>关于ABC
+          </span>
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">专注于网络功能安全认证的专业咨询机构</h2>
+          <p class="text-gray-600 text-lg mb-6">
+            ABC公司成立于2010年，是国内最早专注于工业信息安全和网络功能安全认证咨询的专业服务机构之一。我们拥有一支由IEC 62443标准专家、信息安全顾问和行业资深工程师组成的专业团队。
+          </p>
+          
+          <div class="space-y-6 mb-8">
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-check text-primary"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-2">专业资质</h4>
+                <p class="text-gray-600">拥有多项国际和国内信息安全服务资质，是IEC 62443标准的积极推动者。</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-check text-primary"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-2">行业经验</h4>
+                <p class="text-gray-600">累计为500+企业提供安全认证咨询服务，涵盖能源、制造、交通等多个领域。</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-check text-primary"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-2">专家团队</h4>
+                <p class="text-gray-600">团队成员平均拥有10年以上相关行业经验，多位专家参与过国际标准制定。</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap gap-4">
+            <div class="flex items-center">
+              <span class="text-3xl font-bold text-primary mr-2">13+</span>
+              <span class="text-gray-600">行业经验</span>
+            </div>
+            <div class="flex items-center ml-8">
+              <span class="text-3xl font-bold text-primary mr-2">50+</span>
+              <span class="text-gray-600">专业顾问</span>
+            </div>
+            <div class="flex items-center ml-8">
+              <span class="text-3xl font-bold text-primary mr-2">500+</span>
+              <span class="text-gray-600">成功案例</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 服务内容 -->
+  <section id="services" class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-cogs mr-2"></i>我们的服务
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">全方位IEC 62443认证咨询服务</h2>
+        <p class="text-gray-600 text-lg">我们提供从标准解读到最终认证的一站式服务，帮助企业顺利通过IEC 62443网络功能安全认证</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 服务1 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-file-alt text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">标准解读与差距分析</h3>
+          <p class="text-gray-600 mb-6">深入解读IEC 62443系列标准要求，全面评估企业现有系统与标准的差距，提供详细的差距分析报告和改进建议。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- 服务2 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-project-diagram text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">安全体系构建</h3>
+          <p class="text-gray-600 mb-6">协助企业建立符合IEC 62443标准的网络功能安全管理体系，包括安全策略、流程和组织架构设计。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- 服务3 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-shield-alt text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">安全防护方案设计</h3>
+          <p class="text-gray-600 mb-6">根据IEC 62443标准要求，设计符合企业实际需求的网络安全防护方案，包括边界防护、访问控制、加密等技术措施。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- 服务4 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-laptop-code text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">安全测试与评估</h3>
+          <p class="text-gray-600 mb-6">提供全面的工业控制系统安全测试服务，包括漏洞扫描、渗透测试、风险评估等，验证安全措施的有效性。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- 服务5 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-user-graduate text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">专业培训服务</h3>
+          <p class="text-gray-600 mb-6">提供IEC 62443标准和网络功能安全专业培训，提升企业员工的安全意识和技能，确保安全体系有效运行。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- 服务6 -->
+        <div class="bg-white rounded-xl p-8 shadow-lg hover-lift border border-gray-100">
+          <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <i class="fa fa-certificate text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-4">认证辅导与审核</h3>
+          <p class="text-gray-600 mb-6">全程辅导企业准备认证材料，协助完成认证审核过程，解决审核中发现的问题，确保顺利通过IEC 62443认证。</p>
+          <a href="#contact" class="text-primary font-medium flex items-center">
+            了解详情
+            <i class="fa fa-arrow-right ml-2 text-sm"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IEC 62443标准解读 -->
+  <section id="standard" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-book mr-2"></i>标准解读
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">IEC 62443网络功能安全标准</h2>
+        <p class="text-gray-600 text-lg">IEC 62443是一套针对工业自动化和控制系统网络安全的国际标准，旨在保护工业控制系统免受网络威胁</p>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-12 items-center">
+        <div class="lg:w-1/2">
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-bold mb-6">标准核心内容</h3>
+            
+            <div class="space-y-6">
+              <div class="flex">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">1</div>
+                <div class="ml-4">
+                  <h4 class="text-xl font-semibold mb-2">概念与模型</h4>
+                  <p class="text-gray-600">定义了工业控制系统安全的基本概念、参考模型和术语，建立统一的安全框架。</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">2</div>
+                <div class="ml-4">
+                  <h4 class="text-xl font-semibold mb-2">安全政策与程序</h4>
+                  <p class="text-gray-600">规定了工业控制系统安全管理的政策、流程和组织要求，确保安全管理的系统性。</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">3</div>
+                <div class="ml-4">
+                  <h4 class="text-xl font-semibold mb-2">系统设计要求</h4>
+                  <p class="text-gray-600">详细规定了工业控制系统的安全设计要求，包括网络分区、访问控制、加密等技术措施。</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">4</div>
+                <div class="ml-4">
+                  <h4 class="text-xl font-semibold mb-2">产品安全要求</h4>
+                  <p class="text-gray-600">定义了工业控制产品的安全功能要求和测试方法，确保产品本身的安全性。</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold flex-shrink-0">5</div>
+                <div class="ml-4">
+                  <h4 class="text-xl font-semibold mb-2">评估与认证</h4>
+                  <p class="text-gray-600">规定了工业控制系统安全评估和认证的流程、方法和要求，确保评估结果的一致性。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="lg:w-1/2">
+          <h3 class="text-2xl font-bold mb-6">为什么需要IEC 62443认证？</h3>
+          
+          <div class="space-y-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <div class="flex items-start">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                  <i class="fa fa-shield-alt text-primary"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold mb-2">提升系统安全性</h4>
+                  <p class="text-gray-600">通过认证过程，识别和修复系统安全漏洞，提高工业控制系统的抗攻击能力。</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <div class="flex items-start">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                  <i class="fa fa-balance-scale text-primary"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold mb-2">满足合规要求</h4>
+                  <p class="text-gray-600">越来越多的行业法规和客户要求供应商的工业控制系统符合IEC 62443标准。</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <div class="flex items-start">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                  <i class="fa fa-handshake text-primary"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold mb-2">增强客户信任</h4>
+                  <p class="text-gray-600">获得IEC 62443认证证明企业重视系统安全，能够为客户提供更可靠的产品和服务。</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-md">
+              <div class="flex items-start">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                  <i class="fa fa-line-chart text-primary"></i>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold mb-2">降低运营风险</h4>
+                  <p class="text-gray-600">减少因网络攻击导致的生产中断、数据泄露等安全事件，降低企业运营风险和损失。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <a href="#contact" class="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg shadow-primary/20 transition-custom">
+            获取完整标准解读资料
+            <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 认证流程 -->
+  <section id="process" class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-sitemap mr-2"></i>认证流程
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">IEC 62443认证咨询流程</h2>
+        <p class="text-gray-600 text-lg">我们提供清晰、高效的认证咨询流程，帮助企业顺利通过IEC 62443认证</p>
+      </div>
+
+      <div class="relative">
+        <!-- 连接线 -->
+        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-primary/20 transform -translate-x-1/2"></div>
+        
+        <div class="space-y-12 relative">
+          <!-- 步骤1 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+              <h3 class="text-xl font-semibold mb-2">初步咨询与需求分析</h3>
+              <p class="text-gray-600">了解企业现状和认证需求，确定认证范围和目标，制定初步咨询计划。</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0">1</div>
+            <div class="md:w-1/2 md:pl-12"></div>
+          </div>
+          
+          <!-- 步骤2 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-1 md:order-1"></div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0 order-2">2</div>
+            <div class="md:w-1/2 md:pl-12 order-3 md:order-2">
+              <h3 class="text-xl font-semibold mb-2">标准培训与差距分析</h3>
+              <p class="text-gray-600">提供IEC 62443标准培训，全面评估企业现有系统与标准的差距，出具详细的差距分析报告。</p>
+            </div>
+          </div>
+          
+          <!-- 步骤3 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+              <h3 class="text-xl font-semibold mb-2">安全体系构建与整改</h3>
+              <p class="text-gray-600">协助企业建立符合标准要求的安全管理体系，指导企业进行技术和管理方面的整改。</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0">3</div>
+            <div class="md:w-1/2 md:pl-12"></div>
+          </div>
+          
+          <!-- 步骤4 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-1 md:order-1"></div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0 order-2">4</div>
+            <div class="md:w-1/2 md:pl-12 order-3 md:order-2">
+              <h3 class="text-xl font-semibold mb-2">内部审核与改进</h3>
+              <p class="text-gray-600">指导企业开展内部审核，验证整改效果，针对发现的问题进行持续改进。</p>
+            </div>
+          </div>
+          
+          <!-- 步骤5 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+              <h3 class="text-xl font-semibold mb-2">认证材料准备</h3>
+              <p class="text-gray-600">协助企业准备认证所需的各种文件和证据材料，确保符合认证机构的要求。</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0">5</div>
+            <div class="md:w-1/2 md:pl-12"></div>
+          </div>
+          
+          <!-- 步骤6 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-1 md:order-1"></div>
+            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 mb-8 md:mb-0 order-2">6</div>
+            <div class="md:w-1/2 md:pl-12 order-3 md:order-2">
+              <h3 class="text-xl font-semibold mb-2">认证审核与通过</h3>
+              <p class="text-gray-600">协助企业应对认证机构的审核，解决审核中发现的问题，确保顺利通过认证并获得证书。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-16 text-center">
+        <a href="#contact" class="inline-flex items-center px-8 py-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-xl shadow-primary/20 transition-custom">
+          咨询详细认证流程
+          <i class="fa fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 客户案例 -->
+  <section id="cases" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-thumbs-up mr-2"></i>成功案例
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">我们的客户成功故事</h2>
+        <p class="text-gray-600 text-lg">来自不同行业的客户通过我们的IEC 62443认证咨询服务，成功提升了系统安全性并获得认证</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 案例1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift">
+          <img src="assets/images/119-600-400.jpg" alt="能源行业客户案例" class="w-full h-56 object-cover">
+          <div class="p-8">
+            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium mb-4">能源行业</span>
+            <h3 class="text-xl font-semibold mb-3">国家电网某电力公司</h3>
+            <p class="text-gray-600 mb-6">协助完成变电站自动化系统的IEC 62443认证，建立了完善的网络安全防护体系，提高了电力系统的抗攻击能力。</p>
+            <a href="#contact" class="text-primary font-medium flex items-center">
+              查看详细案例
+              <i class="fa fa-arrow-right ml-2 text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 案例2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift">
+          <img src="assets/images/28-600-400.jpg" alt="制造业客户案例" class="w-full h-56 object-cover">
+          <div class="p-8">
+            <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium mb-4">制造业</span>
+            <h3 class="text-xl font-semibold mb-3">某汽车生产企业</h3>
+            <p class="text-gray-600 mb-6">为其智能制造生产线提供IEC 62443认证咨询服务，帮助其实现了生产控制系统的安全防护，满足了国际客户的要求。</p>
+            <a href="#contact" class="text-primary font-medium flex items-center">
+              查看详细案例
+              <i class="fa fa-arrow-right ml-2 text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 案例3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift">
+          <img src="assets/images/42-600-400.jpg" alt="化工行业客户案例" class="w-full h-56 object-cover">
+          <div class="p-8">
+            <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium mb-4">化工行业</span>
+            <h3 class="text-xl font-semibold mb-3">某大型化工集团</h3>
+            <p class="text-gray-600 mb-6">协助其完成了化工厂DCS系统的IEC 62443认证，建立了完善的安全管理体系，有效防范了网络安全风险。</p>
+            <a href="#contact" class="text-primary font-medium flex items-center">
+              查看详细案例
+              <i class="fa fa-arrow-right ml-2 text-sm"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 客户评价 -->
+      <div class="mt-20">
+        <h3 class="text-2xl font-bold text-center mb-12">客户对我们的评价</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 评价1 -->
+          <div class="bg-white rounded-xl p-8 shadow-lg hover-lift">
+            <div class="flex items-center mb-6">
+              <img src="assets/images/1005-100-100.jpg" alt="客户头像" class="w-14 h-14 rounded-full object-cover">
+              <div class="ml-4">
+                <h4 class="font-semibold">张总监</h4>
+                <p class="text-gray-500 text-sm">某电力公司 信息安全负责人</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <div class="flex">
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+              </div>
+            </div>
+            <p class="text-gray-600">"ABC公司的专业团队帮助我们顺利通过了IEC 62443认证，他们对标准的理解深入透彻，提出的解决方案切实可行，大大提升了我们电力系统的安全性。"</p>
+          </div>
+
+          <!-- 评价2 -->
+          <div class="bg-white rounded-xl p-8 shadow-lg hover-lift">
+            <div class="flex items-center mb-6">
+              <img src="assets/images/1012-100-100.jpg" alt="客户头像" class="w-14 h-14 rounded-full object-cover">
+              <div class="ml-4">
+                <h4 class="font-semibold">李经理</h4>
+                <p class="text-gray-500 text-sm">某汽车企业 IT部门经理</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <div class="flex">
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+              </div>
+            </div>
+            <p class="text-gray-600">"通过与ABC公司的合作，我们不仅成功获得了IEC 62443认证，更重要的是建立了一套完善的工业控制系统安全管理体系，为我们的智能制造战略提供了有力保障。"</p>
+          </div>
+
+          <!-- 评价3 -->
+          <div class="bg-white rounded-xl p-8 shadow-lg hover-lift">
+            <div class="flex items-center mb-6">
+              <img src="assets/images/1027-100-100.jpg" alt="客户头像" class="w-14 h-14 rounded-full object-cover">
+              <div class="ml-4">
+                <h4 class="font-semibold">王工</h4>
+                <p class="text-gray-500 text-sm">某化工集团 自动化工程师</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <div class="flex">
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star text-yellow-400"></i>
+                <i class="fa fa-star-half-alt text-yellow-400"></i>
+              </div>
+            </div>
+            <p class="text-gray-600">"ABC公司的顾问团队具有丰富的行业经验，他们能够结合我们化工厂的实际情况提供定制化的解决方案，帮助我们在最短的时间内通过了认证，值得推荐！"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 专家团队 -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-users mr-2"></i>专家团队
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">我们的专业顾问团队</h2>
+        <p class="text-gray-600 text-lg">由IEC 62443标准专家、信息安全顾问和行业资深工程师组成的专业团队，为您提供专业的认证咨询服务</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- 专家1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-100">
+          <img src="assets/images/1010-400-500.jpg" alt="专家照片" class="w-full h-80 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-1">刘老师</h3>
+            <p class="text-primary mb-3">功能安全认证专家</p>
+            <p class="text-gray-600 text-sm mb-4">前国际电工委员会(IEC)标准专家，拥有20年工业信息安全经验，参与制定多项国际安全标准。</p>
+            <div class="flex space-x-3">
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-linkedin"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 专家2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-100">
+          <img src="assets/images/1000-400-500.jpg" alt="专家照片" class="w-full h-80 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-1">丁工程师</h3>
+            <p class="text-primary mb-3">工业安全专家</p>
+            <p class="text-gray-600 text-sm mb-4">15年工业控制系统安全经验，曾任职于多家世界500强企业，擅长IEC 62443认证辅导。</p>
+            <div class="flex space-x-3">
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-linkedin"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 专家3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-100">
+          <img src="assets/images/1006-400-500.jpg" alt="专家照片" class="w-full h-80 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-1">徐老师</h3>
+            <p class="text-primary mb-3">网络安全专家</p>
+            <p class="text-gray-600 text-sm mb-4">知名大学通信学院教授，网络安全领域权威专家，拥有丰富的IEC 62443培训经验。</p>
+            <div class="flex space-x-3">
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-linkedin"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 专家4 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-100">
+          <img src="assets/images/1009-400-500.jpg" alt="专家照片" class="w-full h-80 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-1">蒋老师</h3>
+            <p class="text-primary mb-3">合规审计专家</p>
+            <p class="text-gray-600 text-sm mb-4">12年信息安全合规审计经验，曾为多家大型企业提供IEC 62443认证审核服务，熟悉认证流程。</p>
+            <div class="flex space-x-3">
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-linkedin"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题 -->
+  <section id="faq" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <i class="fa fa-question-circle mr-2"></i>常见问题
+        </span>
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">IEC 62443认证常见问题</h2>
+        <p class="text-gray-600 text-lg">解答您关于IEC 62443网络功能安全认证的疑问</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-6">
+          <!-- FAQ 1 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <button class="faq-toggle w-full px-6 py-4 text-left font-medium flex justify-between items-center focus:outline-none">
+              <span>IEC 62443认证适用于哪些企业？</span>
+              <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+            </button>
+            <div class="faq-content px-6 py-4 pt-0 text-gray-600 hidden">
+              <p>IEC 62443认证主要适用于涉及工业自动化和控制系统的企业，包括但不限于：制造业、能源行业（电力、石油、天然气）、水处理、交通运输、化工、制药等行业。任何使用工业控制系统（ICS）、 Supervisory Control and Data Acquisition (SCADA)系统、分布式控制系统（DCS）的企业都可以通过IEC 62443认证提升其系统安全性。</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <button class="faq-toggle w-full px-6 py-4 text-left font-medium flex justify-between items-center focus:outline-none">
+              <span>获得IEC 62443认证需要多长时间？</span>
+              <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+            </button>
+            <div class="faq-content px-6 py-4 pt-0 text-gray-600 hidden">
+              <p>IEC 62443认证的时间周期取决于企业现有系统的安全状况、企业规模和复杂度以及企业的资源投入情况。一般来说，从开始咨询到最终获得认证，需要3-12个月的时间。对于安全基础较好的企业，可能3-6个月即可完成；对于安全基础薄弱或系统复杂的企业，可能需要6-12个月甚至更长时间。我们会根据企业实际情况制定合理的计划，尽量缩短认证周期。</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <button class="faq-toggle w-full px-6 py-4 text-left font-medium flex justify-between items-center focus:outline-none">
+              <span>IEC 62443认证的费用大概是多少？</span>
+              <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+            </button>
+            <div class="faq-content px-6 py-4 pt-0 text-gray-600 hidden">
+              <p>IEC 62443认证的费用包括咨询服务费和认证机构的审核费用两部分。咨询服务费根据企业规模、系统复杂度、现有安全状况等因素而定，一般在几万到几十万不等。认证机构的审核费用通常按人天计算，不同认证机构的收费标准也有所不同。我们会根据企业的具体情况提供详细的费用估算，并帮助企业选择合适的认证机构，以获得性价比最高的认证服务。</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <button class="faq-toggle w-full px-6 py-4 text-left font-medium flex justify-between items-center focus:outline-none">
+              <span>通过IEC 62443认证后需要做什么？</span>
+              <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+            </button>
+            <div class="faq-content px-6 py-4 pt-0 text-gray-600 hidden">
+              <p>IEC 62443认证证书的有效期通常为3年。在证书有效期内，企业需要：1) 维持并持续改进安全管理体系；2) 定期进行内部审核和管理评审；3) 接受认证机构的监督审核（通常每年一次）。证书到期前，企业需要申请重新认证，以保持认证资格。我们可以为企业提供认证后的持续支持服务，包括体系维护指导、年度审核准备、重新认证辅导等。</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <button class="faq-toggle w-full px-6 py-4 text-left font-medium flex justify-between items-center focus:outline-none">
+              <span>选择ABC公司提供IEC 62443认证咨询有什么优势？</span>
+              <i class="fa fa-chevron-down text-gray-400 transition-transform"></i>
+            </button>
+            <div class="faq-content px-6 py-4 pt-0 text-gray-600 hidden">
+              <p>选择ABC公司的优势包括：1) 专业团队：拥有由IEC 62443标准专家和行业资深工程师组成的专业团队；2) 丰富经验：已为500+企业提供认证咨询服务，熟悉不同行业的特点和需求；3) 定制方案：根据企业实际情况提供个性化的解决方案，避免"一刀切"；4) 全程辅导：从差距分析到最终认证，提供全程辅导服务；5) 后续支持：提供认证后的持续支持，确保体系有效运行；6) 良好合作：与多家国际知名认证机构保持良好合作关系，提高认证通过率。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系咨询 -->
+  <section id="contact" class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="lg:w-1/2">
+          <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+            <i class="fa fa-envelope mr-2"></i>联系我们
+          </span>
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-6">咨询IEC 62443认证服务</h2>
+          <p class="text-gray-600 text-lg mb-8">
+            无论您想了解更多关于IEC 62443标准的信息，还是需要咨询认证流程和费用，我们的专业顾问都将为您提供详细解答和专业建议。
+          </p>
+          
+          <div class="space-y-6 mb-10">
+            <div class="flex items-start">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-map-marker-alt text-primary text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-1">公司地址</h4>
+                <p class="text-gray-600">北京市海淀区中关村科技园区8号楼15层</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-phone text-primary text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-1">联系电话</h4>
+                <p class="text-gray-600">400-123-4567</p>
+                <p class="text-gray-600">010-87654321</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-envelope text-primary text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-1">电子邮箱</h4>
+                <p class="text-gray-600">info@abccert.com</p>
+                <p class="text-gray-600">service@abccert.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mt-1 flex-shrink-0">
+                <i class="fa fa-clock text-primary text-xl"></i>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold mb-1">工作时间</h4>
+                <p class="text-gray-600">周一至周五: 9:00 - 18:00</p>
+                <p class="text-gray-600">周六至周日: 休息</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex space-x-4">
+            <a href="#" class="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-weixin text-primary text-xl"></i>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-weibo text-primary text-xl"></i>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-linkedin text-primary text-xl"></i>
+            </a>
+            <a href="#" class="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-youtube text-primary text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="lg:w-1/2">
+          <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <h3 class="text-2xl font-bold mb-6">发送咨询信息</h3>
+            <form>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label for="name" class="block text-gray-700 font-medium mb-2">姓名</label>
+                  <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请输入您的姓名">
+                </div>
+                <div>
+                  <label for="company" class="block text-gray-700 font-medium mb-2">公司名称</label>
+                  <input type="text" id="company" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请输入公司名称">
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label for="phone" class="block text-gray-700 font-medium mb-2">联系电话</label>
+                  <input type="tel" id="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请输入联系电话">
+                </div>
+                <div>
+                  <label for="email" class="block text-gray-700 font-medium mb-2">电子邮箱</label>
+                  <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请输入电子邮箱">
+                </div>
+              </div>
+              
+              <div class="mb-6">
+                <label for="industry" class="block text-gray-700 font-medium mb-2">所属行业</label>
+                <select id="industry" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom">
+                  <option value="">请选择行业</option>
+                  <option value="manufacturing">制造业</option>
+                  <option value="energy">能源行业</option>
+                  <option value="chemical">化工行业</option>
+                  <option value="pharmaceutical">制药行业</option>
+                  <option value="water">水处理</option>
+                  <option value="transportation">交通运输</option>
+                  <option value="other">其他行业</option>
+                </select>
+              </div>
+              
+              <div class="mb-6">
+                <label for="message" class="block text-gray-700 font-medium mb-2">咨询内容</label>
+                <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-custom" placeholder="请详细描述您的咨询内容，如认证需求、疑问等"></textarea>
+              </div>
+              
+              <div class="mb-6">
+                <label class="flex items-center">
+                  <input type="checkbox" class="form-checkbox h-5 w-5 text-primary rounded">
+                  <span class="ml-2 text-gray-600">我同意ABC公司根据隐私政策处理我的个人信息</span>
+                </label>
+              </div>
+              
+              <button type="submit" class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg shadow-primary/20 transition-custom text-lg">
+                提交咨询
+                <i class="fa fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA区域 -->
+  <section class="py-24 bg-gradient-blue text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">准备好提升您的工业控制系统安全性了吗？</h2>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto mb-10">联系我们，了解如何通过IEC 62443认证，保护您的工业控制系统免受网络威胁，确保业务持续稳定运行。</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#contact" class="px-8 py-4 bg-white text-primary hover:bg-gray-100 font-medium rounded-lg shadow-xl transition-custom">
+          立即咨询专家
+          <i class="fa fa-arrow-right ml-2"></i>
+        </a>
+        <a href="#process" class="px-8 py-4 bg-transparent hover:bg-white/10 border border-white text-white font-medium rounded-lg transition-custom">
+          了解认证流程
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white pt-16 pb-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <div class="lg:col-span-2">
+          <div class="flex items-center mb-6">
+            <div class="w-10 h-10 rounded-lg bg-gradient-blue flex items-center justify-center">
+              <i class="fa fa-shield-alt text-white text-xl"></i>
+            </div>
+            <span class="ml-2 text-xl font-bold text-white">ABC安全认证</span>
+          </div>
+          <p class="text-white/60 mb-6 max-w-md">ABC公司是专业的IEC 62443网络功能安全认证咨询机构，致力于帮助企业提升工业控制系统安全性，顺利通过国际认证。</p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-weixin text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-weibo text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-linkedin text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-custom">
+              <i class="fa fa-youtube text-white"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-6">服务内容</h4>
+          <ul class="space-y-3">
+            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">标准解读与差距分析</a></li>
+            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">安全体系构建</a></li>
+            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">安全防护方案设计</a></li            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">安全测试与评估</a></li>
+            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">专业培训服务</a></li>
+            <li><a href="#services" class="text-white/60 hover:text-white transition-custom">认证辅导与审核</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-6">关于标准</h4>
+          <ul class="space-y-3">
+            <li><a href="#standard" class="text-white/60 hover:text-white transition-custom">IEC 62443标准概述</a></li>
+            <li><a href="#standard" class="text-white/60 hover:text-white transition-custom">标准核心内容</a></li>
+            <li><a href="#standard" class="text-white/60 hover:text-white transition-custom">认证价值与意义</a></li>
+            <li><a href="#standard" class="text-white/60 hover:text-white transition-custom">行业应用案例</a></li>
+            <li><a href="#faq" class="text-white/60 hover:text-white transition-custom">常见问题解答</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-6">联系我们</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fa fa-map-marker-alt text-primary mt-1 mr-3"></i>
+              <span class="text-white/60">北京市海淀区中关村科技园区8号楼15层</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-phone text-primary mt-1 mr-3"></i>
+              <span class="text-white/60">400-123-4567</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-envelope text-primary mt-1 mr-3"></i>
+              <span class="text-white/60">info@abccert.com</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-clock text-primary mt-1 mr-3"></i>
+              <span class="text-white/60">周一至周五: 9:00 - 18:00</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <p class="text-white/60 text-sm mb-4 md:mb-0">© 2023 ABC安全认证咨询有限公司. 保留所有权利.</p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-white/60 hover:text-white text-sm transition-custom">隐私政策</a>
+            <a href="#" class="text-white/60 hover:text-white text-sm transition-custom">服务条款</a>
+            <a href="#" class="text-white/60 hover:text-white text-sm transition-custom">网站地图</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      menuToggle.innerHTML = mobileMenu.classList.contains('hidden') 
+        ? '<i class="fa fa-bars text-2xl"></i>' 
+        : '<i class="fa fa-times text-2xl"></i>';
+    });
+    
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2', 'shadow-md');
+        navbar.classList.remove('py-4');
+      } else {
+        navbar.classList.remove('py-2', 'shadow-md');
+        navbar.classList.add('py-4');
+      }
+    });
+    
+    // 锚点链接平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动端菜单
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            menuToggle.innerHTML = '<i class="fa fa-bars text-2xl"></i>';
+          }
+        }
+      });
+    });
+    
+    // FAQ折叠面板
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    
+    faqToggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const content = toggle.nextElementSibling;
+        const icon = toggle.querySelector('i');
+        
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+        
+        // 关闭其他打开的FAQ
+        faqToggles.forEach(otherToggle => {
+          if (otherToggle !== toggle) {
+            const otherContent = otherToggle.nextElementSibling;
+            const otherIcon = otherToggle.querySelector('i');
+            
+            if (!otherContent.classList.contains('hidden')) {
+              otherContent.classList.add('hidden');
+              otherIcon.classList.remove('rotate-180');
+            }
+          }
+        });
+      });
+    });
+
+    // 合作伙伴3D旋转动画
+    (function(){
+      const imgs = Array.from(document.querySelectorAll('#partner-track .partner-img'));
+      const n = imgs.length;
+      const centerX = 300; // partner-track宽度一半
+      const maxZ = 180;
+      const maxScale = 1.4;
+      const minScale = 0.7;
+      const maxRotate = 40;
+      function render(pos) {
+        for(let i=0;i<n;i++){
+          const offset = i-pos;
+          const abs = Math.abs(offset);
+          let scale = maxScale - (abs * (maxScale-minScale)/2);
+          if(scale<minScale) scale = minScale;
+          let z = maxZ - abs*maxZ/2;
+          let x = offset*140;
+          let rotateY = offset*maxRotate;
+          imgs[i].style.transform = `translate(-50%,-50%) translateX(${x}px) scale(${scale}) perspective(800px) rotateY(${rotateY}deg)`;
+          imgs[i].style.zIndex = 10-abs;
+          imgs[i].style.opacity = abs<=2 ? 1-abs*0.2 : 0.3;
+          imgs[i].classList.toggle('active', offset===0);
+        }
+      }
+      let current = 2;
+      render(current);
+      // 鼠标移动控制
+      const carousel = document.getElementById('partner-carousel');
+      // 鼠标指向哪张图片，哪张图片居中
+      imgs.forEach((img, i) => {
+        img.addEventListener('mouseenter', () => {
+          render(i);
+        });
+        img.addEventListener('mousemove', () => {
+          render(i);
+        });
+        img.addEventListener('mouseleave', () => {
+          render(current);
+        });
+        img.addEventListener('click', () => {
+          current = i;
+          render(current);
+        });
+      });
+      carousel.addEventListener('mouseleave', ()=>{
+        render(current);
+      });
+    })();
+  </script>
+
+
+</body></html>
