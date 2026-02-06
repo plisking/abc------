@@ -5,7 +5,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- 本地 Font Awesome CSS -->
   <link href="assets/fonts/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
   
   <!-- Tailwind Configuration -->
   <script>
@@ -29,12 +28,6 @@
   
   <style type="text/tailwindcss">
     @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .text-shadow {
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
       .bg-gradient-blue {
         background: linear-gradient(135deg, #0F4C81 0%, #2A86DB 100%);
       }
@@ -47,21 +40,6 @@
       .hover-lift:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      }
-      .section-divider {
-        position: relative;
-        height: 80px;
-        overflow: hidden;
-      }
-      .section-divider::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        height: 100%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,64L60,69.3C120,75,240,85,360,80C480,75,600,53,720,48C840,43,960,53,1080,58.7C1200,64,1320,64,1380,64L1440,64L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z'%3E%3C/path%3E%3C/svg%3E");
-        background-size: cover;
-        background-repeat: no-repeat;
       }
     }
   </style>
@@ -258,9 +236,6 @@
       </div>
     </div>
   </section>
-
-  <!-- 合作伙伴 -->
-
 
   <!-- 关于我们 -->
   <section id="about" class="py-20 bg-gray-50">
@@ -1240,54 +1215,6 @@
       });
     });
 
-    // 合作伙伴3D旋转动画
-    (function(){
-      const imgs = Array.from(document.querySelectorAll('#partner-track .partner-img'));
-      const n = imgs.length;
-      const centerX = 300; // partner-track宽度一半
-      const maxZ = 180;
-      const maxScale = 1.4;
-      const minScale = 0.7;
-      const maxRotate = 40;
-      function render(pos) {
-        for(let i=0;i<n;i++){
-          const offset = i-pos;
-          const abs = Math.abs(offset);
-          let scale = maxScale - (abs * (maxScale-minScale)/2);
-          if(scale<minScale) scale = minScale;
-          let z = maxZ - abs*maxZ/2;
-          let x = offset*140;
-          let rotateY = offset*maxRotate;
-          imgs[i].style.transform = `translate(-50%,-50%) translateX(${x}px) scale(${scale}) perspective(800px) rotateY(${rotateY}deg)`;
-          imgs[i].style.zIndex = 10-abs;
-          imgs[i].style.opacity = abs<=2 ? 1-abs*0.2 : 0.3;
-          imgs[i].classList.toggle('active', offset===0);
-        }
-      }
-      let current = 2;
-      render(current);
-      // 鼠标移动控制
-      const carousel = document.getElementById('partner-carousel');
-      // 鼠标指向哪张图片，哪张图片居中
-      imgs.forEach((img, i) => {
-        img.addEventListener('mouseenter', () => {
-          render(i);
-        });
-        img.addEventListener('mousemove', () => {
-          render(i);
-        });
-        img.addEventListener('mouseleave', () => {
-          render(current);
-        });
-        img.addEventListener('click', () => {
-          current = i;
-          render(current);
-        });
-      });
-      carousel.addEventListener('mouseleave', ()=>{
-        render(current);
-      });
-    })();
   </script>
 
 
